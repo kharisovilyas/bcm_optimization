@@ -3,7 +3,12 @@ package ru.ilcorp.bcm.optimization.model.dto;
 public class dtoRequestOptimization {
     private dtoRange t1Range;
     private dtoRange t2Range;
+    private String method;
+    private double alpha;
+    private double beta;
+    private double gamma;
 
+    // Геттеры и сеттеры
     public dtoRange getT1Range() {
         return t1Range;
     }
@@ -18,5 +23,37 @@ public class dtoRequestOptimization {
 
     public void setT2Range(dtoRange t2Range) {
         this.t2Range = t2Range;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public double getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
+    }
+
+    public double getBeta() {
+        return beta;
+    }
+
+    public void setBeta(double beta) {
+        this.beta = beta;
+    }
+
+    public double getGamma() {
+        return gamma;
+    }
+
+    public void setGamma(double gamma) {
+        this.gamma = gamma;
     }
 }

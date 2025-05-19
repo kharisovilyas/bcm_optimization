@@ -1,25 +1,261 @@
+/* Общие стили */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    color: #222B45;
+    margin: 0;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
-div {
-    margin: 10px 0;
+
+.container {
+    display: flex;
+    max-width: 2000px; /* Увеличено с 1400px */
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
 }
-input {
-    margin: 5px;
-    padding: 5px;
+
+.container:hover {
+    transform: translateY(-5px);
 }
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
+
+/* Левая панель */
+.left-panel {
+    flex: 1;
+    max-width: 400px;
+    padding-right: 20px;
+}
+
+h1 {
+    color: #1976D2;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #1976D2;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #1976D2;
+    padding-bottom: 5px;
+}
+
+/* Секции */
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #F5F7FA;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: background 0.3s ease;
+}
+
+.section:hover {
+    background: #E8F0FE;
+}
+
+.math-section .math {
+    text-align: center;
+    font-size: 12px;
+    margin: 15px 0;
+    padding: 10px;
+    background: #E3F2FD;
+    border-radius: 8px;
+    overflow-x: auto; /* Добавлен горизонтальный скролл для длинных формул */
+    white-space: nowrap; /* Предотвращаем перенос формулы */
+}
+
+.math-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.math-section ul li {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #34495E;
+}
+
+/* Ввод параметров */
+.input-section .input-group {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.input-section label {
+    display: inline-block;
+    width: 220px;
+    font-weight: 500;
+    color: #222B45;
+    font-size: 16px;
+}
+
+.input-section select, .input-section input {
+    padding: 10px;
+    border: 2px solid #1976D2;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 200px;
+    margin-right: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #FFFFFF;
+}
+
+.input-section input {
+    width: 120px;
+}
+
+.input-section select:focus, .input-section input:focus {
+    outline: none;
+    border-color: #1565C0;
+    box-shadow: 0 0 8px rgba(21, 101, 192, 0.3);
+}
+
+/* Кастомизация выпадающего меню */
+.input-section select {
+    appearance: none;
+    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 100%);
+    color: #FFFFFF;
+    font-weight: 500;
     cursor: pointer;
+    padding-right: 30px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-button:hover {
-    background-color: #0056b3;
+
+.input-section select:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
 }
-#surfacePlot {
+
+.input-section select option {
+    background: #FFFFFF;
+    color: #222B45;
+    font-weight: 400;
+}
+
+.input-section .input-group::after {
+    content: '▼';
+    position: absolute;
+    right: 25px;
+    color: #FFFFFF;
+    pointer-events: none;
+}
+
+/* Интерактивное отображение коэффициентов */
+.coefficients-display {
+    display: flex;
+    align-items: center;
+}
+
+.coefficients-wrapper {
+    display: flex;
+    gap: 15px;
+}
+
+#alphaCoefficient, #betaCoefficient, #gammaCoefficient {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #FFFFFF;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease;
+}
+
+#alphaCoefficient {
+    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 100%);
+}
+
+#betaCoefficient {
+    background: linear-gradient(135deg, #42A5F5 0%, #64B5F6 100%);
+}
+
+#gammaCoefficient {
+    background: linear-gradient(135deg, #64B5F6 0%, #90CAF9 100%);
+}
+
+#alphaCoefficient:hover, #betaCoefficient:hover, #gammaCoefficient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Кнопка */
+.input-section button {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #1976D2 0%, #42A5F5 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-section button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+}
+
+/* Результаты */
+.result-section #result {
+    margin: 15px 0;
+    font-size: 18px;
+    color: #1976D2;
+    text-align: center;
+    padding: 10px;
+    background: #E3F2FD;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Правая панель с графиками */
+.right-panel {
+    flex: 3;
+    padding-left: 20px;
+}
+
+.plot-section .plot {
     width: 100%;
     height: 500px;
+    margin-top: 15px;
+    border: 1px solid #BBDEFB;
+    border-radius: 8px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Адаптивность */
+@media (max-width: 1000px) {
+    .container {
+        flex-direction: column;
+    }
+    .left-panel, .right-panel {
+        max-width: 100%;
+        padding: 0;
+    }
+    .right-panel {
+        padding-left: 0;
+        padding-top: 20px;
+    }
 }

@@ -1,25 +1,101 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Optimization Project</title>
+    <title>Оптимизация химического реактора</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/styles.css">
-    <script src="../../static/js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1>Chemical Reactor Optimization</h1>
-<div>
-    <label>T1 Range (min, max):</label>
-    <label for="t1Min"></label><input type="number" id="t1Min" value="-3">
-    <label for="t1Max"></label><input type="number" id="t1Max" value="14">
+<div class="container">
+    <div class="left-panel">
+        <h1>Оптимизация химического реактора</h1>
+
+        <!-- Математическая модель -->
+        <div class="section math-section">
+            <h2>Математическая модель</h2>
+            <div class="math">
+                \[ f(T_1, T_2) = \alpha \cdot 8 \left[ \beta \cdot (T_2 - T_1)^2 + \gamma \cdot \frac{1}{9} (T_1 + T_2 - 10)^2 \right] \]
+            </div>
+            <p><b>Параметры модели:</b></p>
+            <ul>
+                <li>\( T_1 \) — температура в змеевике (°C)</li>
+                <li>\( T_2 \) — температура в диффузоре (°C)</li>
+                <li>\( \alpha, \beta, \gamma \) — нормирующие коэффициенты</li>
+            </ul>
+            <p><b>Ограничения:</b></p>
+            <ul>
+                <li>\( -3 \leq T_1 \leq 14 \)</li>
+                <li>\( -3 \leq T_2 \leq 14 \)</li>
+                <li>\( T_1 + T_2 \leq 12 \)</li>
+            </ul>
+        </div>
+
+        <!-- Ввод параметров -->
+        <div class="section input-section">
+            <h2>Параметры оптимизации</h2>
+            <div class="input-group">
+                <label>Метод оптимизации:</label>
+                <select id="methodSelect">
+                    <option value="BOX">Метод Бокса</option>
+                    <option value="NELDER_MEAD">Метод Нелдера-Мида</option>
+                    <option value="RANDOM_SEARCH">Случайный поиск</option>
+                    <option value="SCANNING">Сканирование</option>
+                    <option value="SEQUENTIAL_VARIATION">Поочередное варьирование</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Конфигурация коэффициентов:</label>
+                <select id="configSelect" onchange="updateCoefficients(); plotSurface(); plotContour();">
+                    <option value="0">Вариант 1: α=0.5, β=0.7, γ=0.9</option>
+                    <option value="1">Вариант 2: α=0.6, β=0.8, γ=1.0</option>
+                    <option value="2">Вариант 3: α=0.7, β=0.9, γ=1.1</option>
+                    <option value="3">Вариант 4: α=0.8, β=1.0, γ=1.2</option>
+                    <option value="4">Вариант 5: α=0.9, β=1.1, γ=1.3</option>
+                    <option value="5">Вариант 6: α=1.0, β=1.2, γ=1.4</option>
+                    <option value="6">Вариант 7: α=1.1, β=1.3, γ=1.5</option>
+                    <option value="7">Вариант 8: α=1.2, β=0.5, γ=0.7</option>
+                    <option value="8">Вариант 9: α=1.3, β=0.6, γ=0.8</option>
+                    <option value="9">Вариант 10: α=1.4, β=0.7, γ=0.9</option>
+                </select>
+            </div>
+            <div class="input-group coefficients-display">
+                <label>Текущие коэффициенты:</label>
+                <div class="coefficients-wrapper">
+                    <span id="alphaCoefficient">α=0.5</span>
+                    <span id="betaCoefficient">β=0.7</span>
+                    <span id="gammaCoefficient">γ=0.9</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Диапазон T₁ (мин, макс):</label>
+                <input type="number" id="t1Min" value="-3" step="0.01">
+                <input type="number" id="t1Max" value="14" step="0.01">
+            </div>
+            <div class="input-group">
+                <label>Диапазон T₂ (мин, макс):</label>
+                <input type="number" id="t2Min" value="-3" step="0.01">
+                <input type="number" id="t2Max" value="14" step="0.01">
+            </div>
+            <button onclick="runOptimization()">Рассчитать</button>
+        </div>
+
+        <!-- Результаты -->
+        <div class="section result-section">
+            <h2>Результаты</h2>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="section plot-section">
+            <h2>Графики</h2>
+            <div id="surfacePlot" class="plot"></div>
+            <div id="contourPlot" class="plot"></div>
+        </div>
+    </div>
 </div>
-<div>
-    <label>T2 Range (min, max):</label>
-    <label for="t2Min"></label><input type="number" id="t2Min" value="-3">
-    <label for="t2Max"></label><input type="number" id="t2Max" value="14">
-</div>
-<button onclick="runOptimization()">Optimize</button>
-<div id="result"></div>
-<div id="surfacePlot"></div>
+<script src="/static/js/app.js"></script>
 </body>
 </html>

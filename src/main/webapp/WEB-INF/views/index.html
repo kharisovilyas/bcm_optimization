@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Optimization Project</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/styles.css">
+    <script src="../../static/js/app.js"></script>
+</head>
+<body>
+<h1>Chemical Reactor Optimization</h1>
+<div>
+    <label>T1 Range (min, max):</label>
+    <label for="t1Min"></label><input type="number" id="t1Min" value="-3">
+    <label for="t1Max"></label><input type="number" id="t1Max" value="14">
+</div>
+<div>
+    <label>T2 Range (min, max):</label>
+    <label for="t2Min"></label><input type="number" id="t2Min" value="-3">
+    <label for="t2Max"></label><input type="number" id="t2Max" value="14">
+</div>
+<button onclick="runOptimization()">Optimize</button>
+<div id="result"></div>
+<div id="surfacePlot"></div>
+</body>
+</html>
